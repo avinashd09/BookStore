@@ -3,9 +3,9 @@
         <h2>BOOK STORE</h2>
         <h4>LOGIN</h4>
         
-        <form action="VerifyUser" method="post">
+        <form action="VerifyUser1" method="post">
             <pre>   
-        UserId    <input type="text" name="UserId"/>
+        UserId    <input type="text" name="userid"/>
        
         Password  <input type="password" name="password"/>
         

@@ -1,4 +1,3 @@
-   
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -24,7 +23,8 @@ public class SaveUser extends HttpServlet {
     String email=req.getParameter("email");
     
     String sql="insert into users value(?,?,?,?,?,?)";
-    try{
+    try
+    {
     Class.forName("com.mysql.jdbc.Driver");
     Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/booksdata","root","root");
     PreparedStatement ps=con.prepareStatement(sql);
