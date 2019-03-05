@@ -7,7 +7,7 @@
         <a href="">UPDATE BOOK</a>
         <a href="">DELETE BOOK BOOK</a>
         <a href="">VIEW ORDERS</a>
-        <a href="">LOG-OUT</a>
+        <a href="KillSession">LOG-OUT</a>
         </pre>
         <hr>
     </body>

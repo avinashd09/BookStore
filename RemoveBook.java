@@ -1,54 +1,28 @@
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.HashSet;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class TitleServlet extends HttpServlet {
+public class RemoveBook extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            
-        PrintWriter out=response.getWriter();
-        String subject=request.getParameter("sub");
         
-        Cookie ck1=new Cookie("choice",subject);
-        ck1.setMaxAge(60*60*24*7);
-        response.addCookie(ck1);
-        String sql="select bcode,title from books where subject=?";
-        try{
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/booksdata","root","root");
-        PreparedStatement ps=con.prepareStatement(sql);
-        ps.setString(1,subject);
-        ResultSet rs=ps.executeQuery();
-         out.println("<html>");
-         out.println("<body>");
-         out.println("<h3>BOOKS-LIST</h3>");
-         while(rs.next())
-         {
-         String s1=rs.getString(1);         
-         String s2=rs.getString(2);
-         out.println("<a href=DetailSevlet?code="+s1+">");
-         out.println(s2);
-         out.println("</a>");
-         out.println("<br>");
-         }
-         out.println("<a href=buyerpage.jsp><h3>BUYERPAGE</h3></a>");
-         out.println("<a href=SubjectServlet><h3>SUBJECTPAGE</h3></a>");
-         out.println("</body>");
-         out.println("</html>");
-         con.close();
-        }
-        catch(Exception e){}
-    
-    
+        //1) read the bcode to be removed.
+        String code=request.getParameter("code");
+        //2) fetch the session for this user.
+        HttpSession session=request.getSession();
+        //3) fetch the cart from session.
+        HashSet<String> set=(HashSet<String>) session.getAttribute("cart");
+        //4) remove the item from cart.
+        set.remove(code);
+        //5) store the updated cart back to session.
+        session.setAttribute("cart", set);
+        //6) redisplay the cart.
+        response.sendRedirect("DisplayCart");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

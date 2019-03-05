@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class VerifyUser1 extends HttpServlet {
@@ -62,6 +63,9 @@ public class VerifyUser1 extends HttpServlet {
        boolean found=rs.next();
        if(found)
        {
+           
+       HttpSession Session=req.getSession();   
+       Session.setAttribute("user", userid);
        resp.sendRedirect("buyerpage.jsp");
        }else
        {

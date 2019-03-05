@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashSet;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SubjectServlet extends HttpServlet {
 
@@ -16,6 +19,32 @@ public class SubjectServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         PrintWriter out=response.getWriter();
+        HttpSession session=request.getSession();
+        String userid=(String) session.getAttribute("user");
+        if(userid==null)
+                
+                {
+                response.sendRedirect("index.jsp");
+                }
+        
+        int items=0;
+        HashSet<String> set=(HashSet<String>) session.getAttribute("cart");
+        if(set!=null){
+        items=set.size();
+        }
+        
+        
+        String subval="ALL";
+        Cookie c[]=request.getCookies();
+        for(Cookie ck:c)
+        {
+        String name=ck.getName();
+        if(name.equals("choice"))
+        {
+        subval=ck.getValue();
+        break;
+        }
+        }
        try{
         Class.forName("com.mysql.jdbc.Driver");
         Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/booksdata","root","root");
@@ -24,6 +53,9 @@ public class SubjectServlet extends HttpServlet {
         ResultSet rs=ps.executeQuery();
         out.println("<html>");
         out.println("<body>");
+        out.println("<marquee><h3>OFFERS ON "+subval+" BOOKS</h3></marquee>");
+        out.println("<h3>WELCOME "+userid+"</h3>");
+        
         out.println("<h3>SUBJECT-LIST</h3>");
         while(rs.next())
         {
