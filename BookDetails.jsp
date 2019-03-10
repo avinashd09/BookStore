@@ -2,6 +2,27 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.DriverManager"%>
+<%!
+int highdis=20;
+int lowdis=10;
+int getDis(int pr)
+{
+int dis=0;
+if(pr<500)
+{
+dis=(pr*lowdis)/100;
+}else
+{
+dis=(pr*highdis)/100;
+}
+return dis;
+}
+
+%>
+
+
+
+
 <%
 int code=Integer.parseInt(request.getParameter("code"));
 Class.forName("com.mysql.jdbc.Driver");
@@ -43,6 +64,10 @@ String price=rs.getString(5);
                 <tr>
                     <td>PRICE</td>
                     <td><%out.println(price);%></td>
+                </tr>
+                 <tr>
+                    <td>DISCOUNT</td>
+                    <td><%=getDis(Integer.parseInt(price))%></td>
                 </tr>
             </tbody>
         </table>
