@@ -1,3 +1,4 @@
+<%@include file="Info.jsp" %>
 <html>
     <body>
         <h1>WELCOME ADMIN</h1>
