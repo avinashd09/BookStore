@@ -7,7 +7,7 @@ String id=(String)session.getAttribute("user");
         <h1>WELCOME <%=id%></h1>
         <hr>
         <pre>
-        <a href="priceinfo.jsp">VIEW-PRICE-LIST</a>
+        <a href="PriceInfo.jsp">VIEW-PRICE-LIST</a>
         <a href="SubjectServlet">VIEW BOOK</a>
         <a href="">SEARCH BY TITLE</a>
         <a href="">SEARCH BY AUTHOR</a>
